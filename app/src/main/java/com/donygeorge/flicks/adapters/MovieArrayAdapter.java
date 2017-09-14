@@ -1,6 +1,7 @@
 package com.donygeorge.flicks.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -49,7 +50,14 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.titleTextView.setText(movie.getTitle());
         viewHolder.descTextView.setText(movie.getOverview());
         viewHolder.imageView.setImageResource(0);
-        Picasso.with(getContext()).load(movie.getPosterURL()).into(viewHolder.imageView);
+        String imageURL = null;
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            imageURL = movie.getPosterURL();
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            imageURL = movie.getBackdropURL();
+        }
+        Picasso.with(getContext()).load(imageURL).into(viewHolder.imageView);
 
         return convertView;
     }

@@ -9,11 +9,16 @@ import java.util.ArrayList;
 public class Movie {
 
     String posterURL;
+    String backdropURL;
     String title;
     String overview;
 
     public String getPosterURL() {
         return "https://image.tmdb.org/t/p/w342" + posterURL;
+    }
+
+    public String getBackdropURL() {
+        return "https://image.tmdb.org/t/p/w500/" + backdropURL;
     }
 
     public String getTitle() {
@@ -26,6 +31,7 @@ public class Movie {
 
     public Movie(JSONObject jsonMovie) throws JSONException {
         this.posterURL = jsonMovie.getString("poster_path");
+        this.backdropURL = jsonMovie.getString("backdrop_path");
         this.title = jsonMovie.getString("original_title");
         this.overview = jsonMovie.getString("overview");
     }

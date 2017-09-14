@@ -18,6 +18,12 @@ import java.util.List;
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
+    private static class ViewHolder {
+        ImageView imageView;
+        TextView titleTextView;
+        TextView descTextView;
+    }
+
     public MovieArrayAdapter(Context context, List<Movie> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }
@@ -27,20 +33,23 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Movie movie = getItem(position);
 
+        ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.item_movie, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.imageView = (ImageView)convertView.findViewById(R.id.movieImageView);
+            viewHolder.titleTextView = (TextView)convertView.findViewById(R.id.titleTextView);
+            viewHolder.descTextView = (TextView)convertView.findViewById(R.id.descTextView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
-
-        ImageView imageView = (ImageView)convertView.findViewById(R.id.movieImageView);
-        TextView titleTextView = (TextView)convertView.findViewById(R.id.titleTextView);
-        TextView descTextView = (TextView)convertView.findViewById(R.id.descTextView);
-
-        titleTextView.setText(movie.getTitle());
-        descTextView.setText(movie.getOverview());
-
-        imageView.setImageResource(0);
-        Picasso.with(getContext()).load(movie.getPosterURL()).into(imageView);
+        
+        viewHolder.titleTextView.setText(movie.getTitle());
+        viewHolder.descTextView.setText(movie.getOverview());
+        viewHolder.imageView.setImageResource(0);
+        Picasso.with(getContext()).load(movie.getPosterURL()).into(viewHolder.imageView);
 
         return convertView;
     }

@@ -10,11 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         tools:src="@android:drawable/ic_media_play" />
 
     <TextView
@@ -24,10 +23,10 @@
         android:layout_alignTop="@+id/movieImageView"
         android:layout_toEndOf="@+id/movieImageView"
         android:layout_toRightOf="@+id/movieImageView"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         tools:text="Sample movie name"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/descTextView"
@@ -36,12 +35,10 @@
         android:layout_below="@+id/titleTextView"
         android:layout_toEndOf="@+id/movieImageView"
         android:layout_toRightOf="@+id/movieImageView"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel vestibulum nisi, sed malesuada felis.
-
-Cras venenatis ultrices diam. Vestibulum sed quam ornare, dapibus dolor et, pulvinar magna. Phasellus fringilla lorem vitae dui ultrices, in tempor lectus ultrices. Vestibulum lacinia nisl in est finibus gravida. In rutrum sem elit, ac vehicula justo pellentesque vel. "
+        android:layout_marginTop="2dp"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel vestibulum nisi, sed malesuada felis. \n\nCras venenatis ultrices diam. Vestibulum sed quam ornare, dapibus dolor et, pulvinar magna. Phasellus fringilla lorem vitae dui ultrices, in tempor lectus ultrices. Vestibulum lacinia nisl in est finibus gravida. In rutrum sem elit, ac vehicula justo pellentesque vel. "
         android:textSize="12sp" />
 
 </RelativeLayout>

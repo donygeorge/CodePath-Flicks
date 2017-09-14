@@ -60,7 +60,12 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             imageURL = movie.getBackdropURL();
             placeholderID = R.drawable.loading_land;
         }
-        Picasso.with(getContext()).load(imageURL).placeholder(placeholderID).into(viewHolder.imageView);
+        Picasso.with(getContext())
+                .load(imageURL)
+                .fit()
+                .centerCrop()
+                .placeholder(placeholderID)
+                .into(viewHolder.imageView);
 
         return convertView;
     }

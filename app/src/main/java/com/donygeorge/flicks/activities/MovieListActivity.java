@@ -1,8 +1,10 @@
 package com.donygeorge.flicks.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
+import android.app.AlertDialog;
 
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.adapters.MovieArrayAdapter;
@@ -51,6 +53,16 @@ public class MovieListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                AlertDialog alertDialog = new AlertDialog.Builder(MovieListActivity.this).create();
+                alertDialog.setTitle("Error");
+                alertDialog.setMessage("Could not retrieve list of movies");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do not do anything yet
+                            }
+                        });
+                alertDialog.show();
             }
         });
     }

@@ -1,24 +1,28 @@
 package com.donygeorge.flicks.activities;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import android.app.AlertDialog;
 
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.adapters.MovieArrayAdapter;
+import com.donygeorge.flicks.helper.SingleHttpClient;
 import com.donygeorge.flicks.models.Movie;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import cz.msebera.android.httpclient.Header;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MovieListActivity extends AppCompatActivity {
 
@@ -36,34 +40,62 @@ public class MovieListActivity extends AppCompatActivity {
         mMovieArrayAdapter = new MovieArrayAdapter(this, mMovies);
         mMoviesListView.setAdapter(mMovieArrayAdapter);
 
-        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray movieJSONResults = null;
-                try {
-                    movieJSONResults = response.getJSONArray("results");
-                    mMovies.addAll(Movie.fromJSONArray(movieJSONResults));
-                    mMovieArrayAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.themoviedb.org/3/movie/now_playing?").newBuilder();
+        urlBuilder.addQueryParameter("api_key", "a07e22bc18f5cb106bfe4cc1f83ad8ed");
+        String url = urlBuilder.build().toString();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                AlertDialog alertDialog = new AlertDialog.Builder(MovieListActivity.this).create();
-                alertDialog.setTitle("Error");
-                alertDialog.setMessage("Could not retrieve list of movies");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do not do anything yet
+        SingleHttpClient.getInstance().newCall(request).enqueue(
+            new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    showErrorDialog();
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) throws IOException {
+                    if (!response.isSuccessful()) {
+                        showErrorDialog();
+                    }
+
+                    JSONArray movieJSONResults = null;
+                    try {
+                        String responseData = response.body().string();
+                        JSONObject json = new JSONObject(responseData);
+                        movieJSONResults = json.getJSONArray("results");
+                        final ArrayList<Movie> movies = Movie.fromJSONArray(movieJSONResults);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mMovies.addAll(movies);
+                                mMovieArrayAdapter.notifyDataSetChanged();
                             }
                         });
-                alertDialog.show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                private void showErrorDialog() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlertDialog alertDialog = new AlertDialog.Builder(MovieListActivity.this).create();
+                            alertDialog.setTitle("Error");
+                            alertDialog.setMessage("Could not retrieve list of movies");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Do not do anything yet
+                                        }
+                                    });
+                            alertDialog.show();
+                        }
+                    });
+                }
             }
-        });
+        );
     }
 }

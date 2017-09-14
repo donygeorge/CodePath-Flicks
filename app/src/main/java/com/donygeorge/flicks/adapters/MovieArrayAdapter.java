@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.donygeorge.flicks.R;
+import com.donygeorge.flicks.helper.SingleHttpClient;
 import com.donygeorge.flicks.models.Movie;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -62,7 +64,8 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             imageURL = movie.getBackdropURL();
             placeholderID = R.drawable.loading_land;
         }
-        Picasso.with(getContext())
+        Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttp3Downloader(SingleHttpClient.getInstance())).build();
+        picasso.with(getContext())
                 .load(imageURL)
                 .fit()
                 .centerCrop()

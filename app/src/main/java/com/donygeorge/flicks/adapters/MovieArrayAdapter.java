@@ -51,13 +51,16 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.descTextView.setText(movie.getOverview());
         viewHolder.imageView.setImageResource(0);
         String imageURL = null;
+        int placeholderID = 0;
         int orientation = getContext().getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             imageURL = movie.getPosterURL();
+            placeholderID = R.drawable.loading_portrait;
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
             imageURL = movie.getBackdropURL();
+            placeholderID = R.drawable.loading_land;
         }
-        Picasso.with(getContext()).load(imageURL).into(viewHolder.imageView);
+        Picasso.with(getContext()).load(imageURL).placeholder(placeholderID).into(viewHolder.imageView);
 
         return convertView;
     }

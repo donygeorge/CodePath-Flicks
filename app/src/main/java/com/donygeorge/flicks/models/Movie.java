@@ -12,6 +12,11 @@ public class Movie {
     String backdropURL;
     String title;
     String overview;
+    double stars;
+
+    public double getStars() {
+        return stars;
+    }
 
     public String getPosterURL() {
         return "https://image.tmdb.org/t/p/w342" + posterURL;
@@ -29,11 +34,16 @@ public class Movie {
         return overview;
     }
 
+    public boolean isPopular() {
+        return (getStars() > 5);
+    }
+
     public Movie(JSONObject jsonMovie) throws JSONException {
         this.posterURL = jsonMovie.getString("poster_path");
         this.backdropURL = jsonMovie.getString("backdrop_path");
         this.title = jsonMovie.getString("original_title");
         this.overview = jsonMovie.getString("overview");
+        this.stars = jsonMovie.getDouble("vote_average");
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {

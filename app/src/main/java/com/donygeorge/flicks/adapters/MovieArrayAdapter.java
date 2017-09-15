@@ -29,6 +29,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         TextView descTextView;
     }
 
+    private enum StoryTypes {
+        POPULAR, NONPOPULAR
+    }
+
     public MovieArrayAdapter(Context context, List<Movie> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }
@@ -39,31 +43,36 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
 
         ViewHolder viewHolder; // view lookup cache stored in tag
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        int type = getItemViewType(position, orientation);
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_movie, parent, false);
+            convertView = getInflatedLayoutForType(type, parent);
             viewHolder = new ViewHolder();
-            viewHolder.imageView = (ImageView)convertView.findViewById(R.id.movieImageView);
-            viewHolder.titleTextView = (TextView)convertView.findViewById(R.id.titleTextView);
-            viewHolder.descTextView = (TextView)convertView.findViewById(R.id.descTextView);
+            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.movieImageView);
+            viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
+            viewHolder.descTextView = (TextView) convertView.findViewById(R.id.descTextView);
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.titleTextView.setText(movie.getTitle());
-        viewHolder.descTextView.setText(movie.getOverview());
+        if (viewHolder.titleTextView != null) {
+            viewHolder.titleTextView.setText(movie.getTitle());
+        }
+        if (viewHolder.descTextView != null) {
+            viewHolder.descTextView.setText(movie.getOverview());
+        }
         viewHolder.imageView.setImageResource(0);
         String imageURL = null;
         int placeholderID = 0;
-        int orientation = getContext().getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            imageURL = movie.getPosterURL();
-            placeholderID = R.drawable.loading_portrait;
-        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            imageURL = movie.getBackdropURL();
-            placeholderID = R.drawable.loading_land;
+        boolean loadPoster = false;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT && type == StoryTypes.NONPOPULAR.ordinal()) {
+            loadPoster = true;
         }
+
+        imageURL = loadPoster ? movie.getPosterURL() : movie.getBackdropURL();
+        placeholderID = loadPoster ? R.drawable.loading_portrait : R.drawable.loading_land;
         Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttp3Downloader(SingleHttpClient.getInstance())).build();
         picasso.with(getContext())
                 .load(imageURL)
@@ -74,5 +83,34 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 .into(viewHolder.imageView);
 
         return convertView;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        return getItemViewType(position, orientation);
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return StoryTypes.values().length;
+    }
+
+    private int getItemViewType(int position, int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return StoryTypes.NONPOPULAR.ordinal();
+        }
+        return (getItem(position).isPopular() ? StoryTypes.POPULAR : StoryTypes.NONPOPULAR).ordinal();
+    }
+
+    private View getInflatedLayoutForType(int type, ViewGroup parent) {
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        if (type == StoryTypes.POPULAR.ordinal()) {
+            return inflater.inflate(R.layout.item_popular_movie, parent, false);
+        } else if (type == StoryTypes.NONPOPULAR.ordinal()) {
+            return inflater.inflate(R.layout.item_movie, parent, false);
+        } else {
+            return null;
+        }
     }
 }

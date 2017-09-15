@@ -2,7 +2,7 @@
 
 **Flicks** shows the latest movies currently playing in theaters. The app utilizes the Movie Database API to display images and basic information about these movies to the user.
 
-Time spent: **5** hours spent in total
+Time spent: **6** hours spent in total
 
 ## User Stories
 
@@ -32,6 +32,7 @@ The following **bonus** features are implemented:
 
 The following **additional** features are implemented:
 
+* Support infinite scrolling
 * Show an error alert when the API request fails
 
 ## Video Walkthrough

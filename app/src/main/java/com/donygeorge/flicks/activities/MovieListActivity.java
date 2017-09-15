@@ -18,6 +18,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -26,19 +28,20 @@ import okhttp3.Response;
 
 public class MovieListActivity extends AppCompatActivity {
 
-    ArrayList<Movie> mMovies;
-    MovieArrayAdapter mMovieArrayAdapter;
-    ListView mMoviesListView;
+    ArrayList<Movie> movies;
+    MovieArrayAdapter movieArrayAdapter;
+    @BindView(R.id.moviesListView)
+    ListView movieslistview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
+        ButterKnife.bind(this);
 
-        mMovies = new ArrayList<>();
-        mMoviesListView = (ListView)findViewById(R.id.moviesListView);
-        mMovieArrayAdapter = new MovieArrayAdapter(this, mMovies);
-        mMoviesListView.setAdapter(mMovieArrayAdapter);
+        movies = new ArrayList<>();
+        movieArrayAdapter = new MovieArrayAdapter(this, movies);
+        movieslistview.setAdapter(movieArrayAdapter);
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("https://api.themoviedb.org/3/movie/now_playing?").newBuilder();
         urlBuilder.addQueryParameter("api_key", "a07e22bc18f5cb106bfe4cc1f83ad8ed");
@@ -69,8 +72,8 @@ public class MovieListActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mMovies.addAll(movies);
-                                mMovieArrayAdapter.notifyDataSetChanged();
+                                MovieListActivity.this.movies.addAll(movies);
+                                movieArrayAdapter.notifyDataSetChanged();
                             }
                         });
                     } catch (JSONException e) {

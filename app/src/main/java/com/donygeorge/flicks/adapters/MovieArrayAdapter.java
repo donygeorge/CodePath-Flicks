@@ -19,14 +19,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
-    private static class ViewHolder {
-        ImageView imageView;
-        TextView titleTextView;
-        TextView descTextView;
+    static class ViewHolder {
+        @BindView(R.id.movieImageView) ImageView imageView;
+        @Nullable @BindView(R.id.titleTextView) TextView titleTextView;
+        @Nullable @BindView(R.id.descTextView) TextView descTextView;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     private enum StoryTypes {
@@ -48,10 +54,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = getInflatedLayoutForType(type, parent);
-            viewHolder = new ViewHolder();
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.movieImageView);
-            viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.titleTextView);
-            viewHolder.descTextView = (TextView) convertView.findViewById(R.id.descTextView);
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

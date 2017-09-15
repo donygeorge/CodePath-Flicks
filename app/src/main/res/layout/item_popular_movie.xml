@@ -17,4 +17,18 @@
         android:layout_marginTop="4dp"
         tools:src="@drawable/loading_land" />
 
+    <ImageView
+        android:id="@+id/playImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/play"
+        android:background="@android:color/transparent"
+        android:alpha="0.75"
+        android:layout_centerInParent="true"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/movieImageView"
+        android:layout_alignBottom="@+id/movieImageView"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

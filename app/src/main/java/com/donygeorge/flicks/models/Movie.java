@@ -13,6 +13,7 @@ public class Movie {
     String title;
     String overview;
     double stars;
+    int id;
 
     public double getStars() {
         return stars;
@@ -38,12 +39,17 @@ public class Movie {
         return (getStars() > 5);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Movie(JSONObject jsonMovie) throws JSONException {
         this.posterURL = jsonMovie.getString("poster_path");
         this.backdropURL = jsonMovie.getString("backdrop_path");
         this.title = jsonMovie.getString("original_title");
         this.overview = jsonMovie.getString("overview");
         this.stars = jsonMovie.getDouble("vote_average");
+        this.id = jsonMovie.getInt("id");
     }
 
     public static ArrayList<Movie> fromJSONArray(JSONArray jsonArray) {

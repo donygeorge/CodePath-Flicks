@@ -1,6 +1,7 @@
 package com.donygeorge.flicks.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.donygeorge.flicks.R;
+import com.donygeorge.flicks.activities.FullVideoPlayerActivity;
 import com.donygeorge.flicks.helper.SingleHttpClient;
 import com.donygeorge.flicks.models.Movie;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -27,11 +29,20 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     static class ViewHolder {
         @BindView(R.id.movieImageView) ImageView imageView;
+        @Nullable @BindView(R.id.playImageView) ImageView playImageView;
         @Nullable @BindView(R.id.titleTextView) TextView titleTextView;
         @Nullable @BindView(R.id.descTextView) TextView descTextView;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+        }
+
+        public void resetImageView() {
+            imageView.setImageResource(0);
+            imageView.setOnClickListener(null);
+            if (playImageView != null) {
+                playImageView.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -66,7 +77,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         if (viewHolder.descTextView != null) {
             viewHolder.descTextView.setText(movie.getOverview());
         }
-        viewHolder.imageView.setImageResource(0);
+        viewHolder.resetImageView();
         String imageURL = null;
         int placeholderID = 0;
         boolean loadPoster = false;
@@ -84,6 +95,11 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 .transform(new RoundedCornersTransformation(10, 10))
                 .placeholder(placeholderID)
                 .into(viewHolder.imageView);
+
+        // setup  poster if the backdrop image is displayed
+        if (!loadPoster) {
+            setupVideoPlayer(viewHolder, movie);
+        }
 
         return convertView;
     }
@@ -115,5 +131,21 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         } else {
             return null;
         }
+    }
+
+    private void setupVideoPlayer(ViewHolder viewHolder, final Movie movie) {
+        if (viewHolder.playImageView != null) {
+            viewHolder.playImageView.setVisibility(View.VISIBLE);
+        }
+        viewHolder.imageView.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getContext(), FullVideoPlayerActivity.class);
+                    i.putExtra("movie_id", movie.getId());
+                    getContext().startActivity(i);
+                }
+            }
+        );
     }
 }

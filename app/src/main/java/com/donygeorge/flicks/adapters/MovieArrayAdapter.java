@@ -27,7 +27,9 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
-    static class ViewHolder {
+    private Picasso picasso;
+
+    class ViewHolder {
         @BindView(R.id.movieImageView) ImageView imageView;
         @Nullable @BindView(R.id.playImageView) ImageView playImageView;
         @Nullable @BindView(R.id.titleTextView) TextView titleTextView;
@@ -38,6 +40,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         }
 
         public void resetImageView() {
+            picasso.cancelRequest(imageView);
             imageView.setImageResource(0);
             imageView.setOnClickListener(null);
             if (playImageView != null) {
@@ -52,6 +55,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
     public MovieArrayAdapter(Context context, List<Movie> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
+        this.picasso = new Picasso.Builder(getContext()).downloader(new OkHttp3Downloader(SingleHttpClient.getInstance())).build();
     }
 
     @NonNull
@@ -87,7 +91,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         imageURL = loadPoster ? movie.getPosterURL() : movie.getBackdropURL();
         placeholderID = loadPoster ? R.drawable.loading_portrait : R.drawable.loading_land;
-        Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttp3Downloader(SingleHttpClient.getInstance())).build();
         picasso.with(getContext())
                 .load(imageURL)
                 .fit()

@@ -39,15 +39,16 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://imgur.com/pbumJPm' title='Video Walkthrough: Portrait' width='' alt='Video Walkthrough: Portrait' />
+<img src='https://imgur.com/kG727Ia' title='Video Walkthrough: Landscape' width='' alt='Video Walkthrough: Landscape' />
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [ezgif](https://ezgif.com/video-to-gif).
 
 ## Open-source libraries used
 
 - [OkHttp](https://github.com/square/okhttp) - An HTTP+HTTP/2 client for Android and Java applications
 - [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
-- [ButterKnife](Bind Android views and callbacks to fields and methods.) - https://github.com/JakeWharton/butterknife
+- [ButterKnife](https://github.com/JakeWharton/butterknife) - Bind Android views and callbacks to fields and methods 
 
 ## License
 

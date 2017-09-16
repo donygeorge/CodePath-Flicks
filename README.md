@@ -39,8 +39,8 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![](http://i.imgur.com/mod6o3H.gif)
-![](http://i.imgur.com/QKmwqAb.gif)
+![Walkthrough: Portrait](https://user-images.githubusercontent.com/1111292/30509761-e14e34ce-9a85-11e7-8762-cde7a47e57a0.gif)
+![Walkthrough: Landscape](https://user-images.githubusercontent.com/1111292/30509742-8ac948be-9a85-11e7-81d1-19746dd25b43.gif)
 
 GIF created with [ezgif](https://ezgif.com/video-to-gif).
 

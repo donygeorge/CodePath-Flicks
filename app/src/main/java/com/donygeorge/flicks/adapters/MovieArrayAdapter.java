@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.activities.FullVideoPlayerActivity;
+import com.donygeorge.flicks.activities.MovieDetailsActivity;
+import com.donygeorge.flicks.helper.Constants;
 import com.donygeorge.flicks.helper.SingleHttpClient;
 import com.donygeorge.flicks.models.Movie;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -99,8 +101,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 .placeholder(placeholderID)
                 .into(viewHolder.imageView);
 
-        // setup  poster if the backdrop image is displayed
-        if (!loadPoster) {
+        if (loadPoster) {
+            setupDetailsPage(convertView, viewHolder, movie);
+        } else {
+            convertView.setOnClickListener(null);
             setupVideoPlayer(viewHolder, movie);
         }
 
@@ -145,10 +149,28 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(getContext(), FullVideoPlayerActivity.class);
-                    i.putExtra("movie_id", movie.getId());
+                    i.putExtra(Constants.movieId, movie.getId());
                     getContext().startActivity(i);
                 }
             }
         );
+    }
+
+    private void setupDetailsPage(View view, ViewHolder viewHolder, final Movie movie) {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), MovieDetailsActivity.class);
+                i.putExtra(Constants.movieId, movie.getId());
+                i.putExtra(Constants.movieTitle, movie.getTitle());
+                i.putExtra(Constants.movieStars, movie.getStars());
+                i.putExtra(Constants.movieReleaseDate, movie.getReleaseDate());
+                i.putExtra(Constants.movieOverview, movie.getOverview());
+                getContext().startActivity(i);
+            }
+        };
+
+        view.setOnClickListener(listener);
+        viewHolder.imageView.setOnClickListener(listener);
     }
 }

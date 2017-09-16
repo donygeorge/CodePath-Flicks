@@ -12,6 +12,7 @@ public class Movie {
     String backdropURL;
     String title;
     String overview;
+    String releaseDate;
     double stars;
     int id;
 
@@ -35,6 +36,10 @@ public class Movie {
         return overview;
     }
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
     public boolean isPopular() {
         return (getStars() > 5);
     }
@@ -48,6 +53,7 @@ public class Movie {
         this.backdropURL = jsonMovie.getString("backdrop_path");
         this.title = jsonMovie.getString("original_title");
         this.overview = jsonMovie.getString("overview");
+        this.releaseDate = jsonMovie.getString("release_date");
         this.stars = jsonMovie.getDouble("vote_average");
         this.id = jsonMovie.getInt("id");
     }

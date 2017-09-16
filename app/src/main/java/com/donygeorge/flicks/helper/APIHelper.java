@@ -17,7 +17,6 @@ public class APIHelper {
     public static interface APICallback {
         abstract void onSuccess(JSONObject object);
         abstract void onFailure();
-
     }
 
     private static void queryObject(String baseURL, HashMap<String, String> params, final APICallback apiCallback) {

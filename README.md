@@ -39,7 +39,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![](http://i.imgur.com/pbumJPm.gif)
+![](http://i.imgur.com/mod6o3H.gif)
 ![](http://i.imgur.com/kG727Ia.gif)
 
 GIF created with [ezgif](https://ezgif.com/video-to-gif).

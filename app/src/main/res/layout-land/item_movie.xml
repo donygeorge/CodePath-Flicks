@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/movieImageView"
+        android:id="@+id/movie_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,24 +17,24 @@
         tools:src="@drawable/loading_land" />
 
     <TextView
-        android:id="@+id/titleTextView"
+        android:id="@+id/title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/movieImageView"
-        android:layout_toEndOf="@+id/movieImageView"
-        android:layout_toRightOf="@+id/movieImageView"
+        android:layout_alignTop="@+id/movie_image_view"
+        android:layout_toEndOf="@+id/movie_image_view"
+        android:layout_toRightOf="@+id/movie_image_view"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         tools:text="Sample movie name"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/descTextView"
+        android:id="@+id/overview_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/titleTextView"
-        android:layout_toEndOf="@+id/movieImageView"
-        android:layout_toRightOf="@+id/movieImageView"
+        android:layout_below="@+id/title_text_view"
+        android:layout_toEndOf="@+id/movie_image_view"
+        android:layout_toRightOf="@+id/movie_image_view"
         android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="2dp"

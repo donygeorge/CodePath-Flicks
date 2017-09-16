@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/movieImageView"
+        android:id="@+id/movie_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -27,8 +27,8 @@
         android:layout_centerInParent="true"
         android:elevation="10dp"
         android:visibility="invisible"
-        android:layout_alignTop="@+id/movieImageView"
-        android:layout_alignBottom="@+id/movieImageView"
+        android:layout_alignTop="@+id/movie_image_view"
+        android:layout_alignBottom="@+id/movie_image_view"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

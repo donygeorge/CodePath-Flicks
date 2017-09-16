@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.helper.Constants;
+import com.donygeorge.flicks.helper.ErrorDialogHelper;
 import com.donygeorge.flicks.helper.VideoPlayerHelper;
 import com.donygeorge.flicks.models.Video;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -41,7 +42,7 @@ public class FullVideoPlayerActivity extends YouTubeBaseActivity {
     }
 
     private void exitActivity() {
-        // TODO: Add an error alert
+        ErrorDialogHelper.showDialog(this, "Fail to load video");
         finish();
     }
 }

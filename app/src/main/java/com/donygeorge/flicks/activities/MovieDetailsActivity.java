@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.helper.Constants;
+import com.donygeorge.flicks.helper.ErrorDialogHelper;
 import com.donygeorge.flicks.helper.VideoPlayerHelper;
 import com.donygeorge.flicks.models.Video;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -16,15 +17,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieDetailsActivity extends YouTubeBaseActivity {
-    @BindView(R.id.detailsVideoPlayer)
+    @BindView(R.id.details_video_player)
     YouTubePlayerView videoPlayer;
-    @BindView(R.id.detailsTitleTextView)
+    @BindView(R.id.details_title_text_view)
     TextView titleTextView;
-    @BindView(R.id.detailReleaseTextView)
+    @BindView(R.id.details_release_date_text_view)
     TextView releaseDateTextView;
-    @BindView(R.id.detailSummaryTextView)
+    @BindView(R.id.details_overview_text_view)
     TextView overviewTextView;
-    @BindView(R.id.detailsRatingBar)
+    @BindView(R.id.details_rating_bar)
     RatingBar ratingBar;
 
     @Override
@@ -45,6 +46,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
         titleTextView.setText(movieTitle);
         overviewTextView.setText(movieOverview);
         releaseDateTextView.setText(getString(R.string.release_date_prefix) + movieReleaseDate);
+        // Dividing by 2 since the rating is out of 10
         ratingBar.setRating((float)movieStars / 2);
 
         VideoPlayerHelper.queryAndPrepareVideo(movieId, this, videoPlayer, new VideoPlayerHelper.Callback() {
@@ -62,7 +64,7 @@ public class MovieDetailsActivity extends YouTubeBaseActivity {
     }
 
     private void exitActivity() {
-        // TODO: Add an error alert
+        ErrorDialogHelper.showDialog(this, "Fail to load movie details");
         finish();
     }
 }

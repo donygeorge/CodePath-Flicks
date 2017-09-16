@@ -11,7 +11,7 @@
     tools:context="com.donygeorge.flicks.activities.MovieDetailsActivity">
 
     <com.google.android.youtube.player.YouTubePlayerView
-        android:id="@+id/detailsVideoPlayer"
+        android:id="@+id/details_video_player"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="4dp"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/detailsTitleTextView"
+        android:id="@+id/details_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -31,13 +31,13 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/detailsVideoPlayer"
+        android:layout_below="@+id/details_video_player"
         tools:text="Sample movie name"
         android:textStyle="bold"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/detailReleaseTextView"
+        android:id="@+id/details_release_date_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -46,13 +46,13 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/detailsTitleTextView"
+        android:layout_below="@+id/details_title_text_view"
         tools:text="Release date: Jan 1, 2017"
         android:textStyle="italic|bold"
         android:textSize="12sp" />
 
     <RatingBar
-        android:id="@+id/detailsRatingBar"
+        android:id="@+id/details_rating_bar"
         android:numStars="5"
         android:stepSize="0.1"
         android:max="5"
@@ -63,10 +63,10 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/detailReleaseTextView" />
+        android:layout_below="@+id/details_release_date_text_view" />
 
     <TextView
-        android:id="@+id/detailSummaryTextView"
+        android:id="@+id/details_overview_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -75,7 +75,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@+id/detailsRatingBar"
+        android:layout_below="@+id/details_rating_bar"
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel vestibulum nisi, sed malesuada felis. \n\nCras venenatis ultrices diam. Vestibulum sed quam ornare, dapibus dolor et, pulvinar magna. Phasellus fringilla lorem vitae dui ultrices, in tempor lectus ultrices. Vestibulum lacinia nisl in est finibus gravida. In rutrum sem elit, ac vehicula justo pellentesque vel. "
         android:textSize="14sp" />
 

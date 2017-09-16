@@ -1,7 +1,5 @@
 package com.donygeorge.flicks.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AbsListView;
@@ -10,6 +8,8 @@ import android.widget.ListView;
 import com.donygeorge.flicks.R;
 import com.donygeorge.flicks.adapters.MovieArrayAdapter;
 import com.donygeorge.flicks.helper.APIHelper;
+import com.donygeorge.flicks.helper.Constants;
+import com.donygeorge.flicks.helper.ErrorDialogHelper;
 import com.donygeorge.flicks.models.Movie;
 
 import org.json.JSONArray;
@@ -26,7 +26,7 @@ public class MovieListActivity extends AppCompatActivity {
 
     ArrayList<Movie> movies;
     MovieArrayAdapter movieArrayAdapter;
-    @BindView(R.id.moviesListView) ListView movieslistview;
+    @BindView(R.id.movies_list_view) ListView movieslistview;
 
     // Infine scrolling
     ReentrantReadWriteLock lock;
@@ -50,8 +50,6 @@ public class MovieListActivity extends AppCompatActivity {
         totalPages = 1;
 
         movieslistview.setOnScrollListener(new AbsListView.OnScrollListener() {
-            final int visibleThreshold = 5;
-
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
                 // Ignore
@@ -59,7 +57,7 @@ public class MovieListActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if ((firstVisibleItem + visibleItemCount + visibleThreshold) >= totalItemCount) {
+                if ((firstVisibleItem + visibleItemCount + Constants.visibleThreshold) >= totalItemCount) {
                     queryMovies();
                 }
             }
@@ -107,21 +105,7 @@ public class MovieListActivity extends AppCompatActivity {
             }
 
             private void showErrorDialog() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AlertDialog alertDialog = new AlertDialog.Builder(MovieListActivity.this).create();
-                        alertDialog.setTitle("Error");
-                        alertDialog.setMessage("Could not retrieve list of movies");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Do not do anything yet
-                                    }
-                                });
-                        alertDialog.show();
-                    }
-                });
+                ErrorDialogHelper.showDialog(MovieListActivity.this, "Could not retrieve list of movies");
             }
         });
     }

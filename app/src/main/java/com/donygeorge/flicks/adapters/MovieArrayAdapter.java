@@ -32,10 +32,10 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     private Picasso picasso;
 
     class ViewHolder {
-        @BindView(R.id.movieImageView) ImageView imageView;
+        @BindView(R.id.movie_image_view) ImageView imageView;
         @Nullable @BindView(R.id.playImageView) ImageView playImageView;
-        @Nullable @BindView(R.id.titleTextView) TextView titleTextView;
-        @Nullable @BindView(R.id.descTextView) TextView descTextView;
+        @Nullable @BindView(R.id.title_text_view) TextView titleTextView;
+        @Nullable @BindView(R.id.overview_text_view) TextView descTextView;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
